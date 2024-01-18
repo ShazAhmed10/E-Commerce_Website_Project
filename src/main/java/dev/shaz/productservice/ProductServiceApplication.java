@@ -7,8 +7,10 @@ import dev.shaz.productservice.Inheritanceexample.singletable.Mentor;
 import dev.shaz.productservice.Inheritanceexample.tableperclass.User;
 import dev.shaz.productservice.Inheritanceexample.tableperclass.UserRepository;
 import dev.shaz.productservice.models.Category;
+import dev.shaz.productservice.models.Price;
 import dev.shaz.productservice.models.Product;
 import dev.shaz.productservice.repositories.CategoryRepository;
+import dev.shaz.productservice.repositories.PriceRepository;
 import dev.shaz.productservice.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,14 +27,16 @@ public class ProductServiceApplication implements CommandLineRunner {
 
 	private CategoryRepository categoryRepository;
 	private ProductRepository productRepository;
+	private PriceRepository priceRepository;
 
 	@Autowired
-	public ProductServiceApplication(CategoryRepository categoryRepository, ProductRepository productRepository){
+	public ProductServiceApplication(CategoryRepository categoryRepository, ProductRepository productRepository, PriceRepository priceRepository){
 		//this.mentorRepository = mentorRepository;
 		//this.studentRepository = studentRepository;
 
 		this.categoryRepository = categoryRepository;
 		this.productRepository = productRepository;
+		this .priceRepository = priceRepository;
 	}
 
 	public static void main(String[] args) {
@@ -72,19 +76,22 @@ public class ProductServiceApplication implements CommandLineRunner {
 //
 //		studentRepository.save(student);
 
-//		Category category = new Category();
-//		category.setName("Electronics");
-//
-//		Category savedCategory = categoryRepository.save(category);
-//
-//		Product product = new Product();
-//		product.setTitle("IPhone");
-//		product.setDescription("Best phone ever");
-//		product.setPrice(100.0);
-//		product.setImage("image url");
-//		product.setCategory(savedCategory);
-//
-//		productRepository.save(product);
+		Category category = new Category();
+		category.setName("Electronics");
+
+		Category savedCategory = categoryRepository.save(category);
+
+		Price price = new Price("Rupee", 10.0);
+		Price savedPrice = priceRepository.save(price);
+
+		Product product = new Product();
+		product.setTitle("IPhone");
+		product.setDescription("Best phone ever");
+		product.setImage("image url");
+		product.setCategory(savedCategory);
+		product.setPrice(savedPrice);
+
+		productRepository.save(product);
 
 
 	}
