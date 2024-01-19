@@ -17,6 +17,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -76,23 +78,29 @@ public class ProductServiceApplication implements CommandLineRunner {
 //
 //		studentRepository.save(student);
 
-		Category category = new Category();
-		category.setName("Electronics");
+//		Category category = new Category();
+//		category.setName("Electronics");
+//
+//		Category savedCategory = categoryRepository.save(category);
+//
+//		Price price = new Price("Rupee", 10.0);
+//		Price savedPrice = priceRepository.save(price);
+//
+//		Product product = new Product();
+//		product.setTitle("IPhone");
+//		product.setDescription("Best phone ever");
+//		product.setImage("image url");
+//		product.setCategory(savedCategory);
+//		product.setPrice(savedPrice);
+//
+//		productRepository.save(product);
 
-		Category savedCategory = categoryRepository.save(category);
-
-		Price price = new Price("Rupee", 10.0);
-		Price savedPrice = priceRepository.save(price);
-
-		Product product = new Product();
-		product.setTitle("IPhone");
-		product.setDescription("Best phone ever");
-		product.setImage("image url");
-		product.setCategory(savedCategory);
-		product.setPrice(savedPrice);
-
-		productRepository.save(product);
-
+//		Optional<Category> categoryOptional = categoryRepository.findById(UUID.fromString(""));
+//		Category category = categoryOptional.get();
+//		System.out.println(category);
+//
+//		List<Product> products = category.getProduct();
+//		System.out.println(products);
 
 	}
 }

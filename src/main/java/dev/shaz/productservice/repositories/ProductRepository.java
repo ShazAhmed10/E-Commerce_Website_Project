@@ -11,11 +11,11 @@ import java.util.UUID;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, UUID> {
 
-    Product findByTitleAndPrice_currency(String title, String currency);
-
-    @Query(value = "select * from product where title = :title", nativeQuery = true)
-    List<Product> findByTitleSQL(String title);
-
-    @Query(value = "select Product from Product where Product.title = :title", nativeQuery = false)
-    List<Product> findByTitleHQL(String title);
+//    Product findByTitleAndPrice_currency(String title, String currency);
+//
+//    @Query(value = "select * from product where title = :title", nativeQuery = true)
+//    List<Product> findByTitleSQL(String title);
+//
+//    @Query(value = "select Product from Product where Product.title = :title", nativeQuery = false)
+//    List<Product> findByTitleHQL(String title);
 }
