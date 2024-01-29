@@ -15,9 +15,11 @@ public class Product extends BaseModel{
     private String description;
     private String image;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private Category category;
 
     @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private Price price;
+
+    private int inventoryCount;
 }

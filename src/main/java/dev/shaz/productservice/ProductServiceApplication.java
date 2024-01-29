@@ -38,7 +38,7 @@ public class ProductServiceApplication implements CommandLineRunner {
 
 		this.categoryRepository = categoryRepository;
 		this.productRepository = productRepository;
-		this .priceRepository = priceRepository;
+		this.priceRepository = priceRepository;
 	}
 
 	public static void main(String[] args) {
@@ -47,6 +47,8 @@ public class ProductServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+//		*** To show Inheritance Examples working ***
+
 //		Mentor mentor = new Mentor();
 //		mentor.setName("Jackson");
 //		mentor.setEmail("jack@gmail.com");
@@ -78,29 +80,22 @@ public class ProductServiceApplication implements CommandLineRunner {
 //
 //		studentRepository.save(student);
 
+//		******
+
 //		Category category = new Category();
 //		category.setName("Electronics");
-//
 //		Category savedCategory = categoryRepository.save(category);
-//
+
 //		Price price = new Price("Rupee", 10.0);
 //		Price savedPrice = priceRepository.save(price);
-//
-//		Product product = new Product();
-//		product.setTitle("IPhone");
-//		product.setDescription("Best phone ever");
-//		product.setImage("image url");
-//		product.setCategory(savedCategory);
-//		product.setPrice(savedPrice);
-//
-//		productRepository.save(product);
 
-//		Optional<Category> categoryOptional = categoryRepository.findById(UUID.fromString(""));
-//		Category category = categoryOptional.get();
-//		System.out.println(category);
-//
-//		List<Product> products = category.getProduct();
-//		System.out.println(products);
+//		Product product = new Product();
+//		product.setTitle("Samsung");
+//		product.setDescription("2nd best phone");
+//		product.setImage("image url samsung");
+//		product.setCategory(category);
+//		product.setPrice(price);
+//		productRepository.save(product);
 
 	}
 }

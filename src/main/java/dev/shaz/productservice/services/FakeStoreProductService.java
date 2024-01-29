@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Primary
 @Service("fakeStoreProductService")
@@ -39,8 +40,8 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public GenericProductDto getProductById(Long id) throws NotFoundException {
-        return convertFakeStoreProductDtoToGenericProductDto(fakeStoreProductClient.getProductById(id));
+    public GenericProductDto getProductById(String id) throws NotFoundException {
+        return convertFakeStoreProductDtoToGenericProductDto(fakeStoreProductClient.getProductById(Long.parseLong(id)));
     }
 
     @Override
@@ -63,7 +64,12 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public GenericProductDto deleteProduct(Long id) {
-        return convertFakeStoreProductDtoToGenericProductDto(fakeStoreProductClient.deleteProduct(id));
+    public GenericProductDto deleteProduct(String id) {
+        return convertFakeStoreProductDtoToGenericProductDto(fakeStoreProductClient.deleteProduct(Long.parseLong(id)));
+    }
+
+    @Override
+    public GenericProductDto updateProductById(String id, GenericProductDto genericProductDto) throws NotFoundException {
+        return null;
     }
 }

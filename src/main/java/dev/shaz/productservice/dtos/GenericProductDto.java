@@ -1,8 +1,11 @@
 package dev.shaz.productservice.dtos;
 
 import dev.shaz.productservice.models.Category;
+import dev.shaz.productservice.models.Price;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,5 +15,6 @@ public class GenericProductDto {
     private String description;
     private String image;
     private String category;
-    private double price;
+    private Double price;
+    private int inventoryCount;
 }
