@@ -18,7 +18,7 @@ import java.util.List;
 public class FakeStoreProductClient {
     @Value("${fakestore.api.baseurl}")
     private String fakeStoreApiBaseUrl;
-    @Value("${fakestore.api.product")
+    @Value("${fakestore.api.product}")
     private String fakeStoreApiProductPath;
     private final String productPath = "/products";
     private String productUrl = "https://fakestoreapi.com/products/{id}";

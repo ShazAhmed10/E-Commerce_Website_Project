@@ -3,27 +3,50 @@ package dev.shaz.productservice.controllers;
 import dev.shaz.productservice.dtos.ExceptionDto;
 import dev.shaz.productservice.dtos.GenericProductDto;
 import dev.shaz.productservice.exceptions.NotFoundException;
+import dev.shaz.productservice.security.JwtData;
+import dev.shaz.productservice.security.TokenValidator;
 import dev.shaz.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-
     private ProductService productService;
+    private TokenValidator tokenValidator;
 
-    public ProductController(@Qualifier("selfProductService") ProductService productService){
+    public ProductController(@Qualifier("selfProductService") ProductService productService,
+                             TokenValidator tokenValidator){
         this.productService = productService;
+        this.tokenValidator = tokenValidator;
     }
 
     @GetMapping("{id}")
-    public GenericProductDto getProductById(@PathVariable("id") String id) throws NotFoundException {
+    public GenericProductDto getProductById(
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authToken,
+            @RequestParam Long userId,
+            @PathVariable("id") String id) throws NotFoundException {
+
+        JwtData jwtData = tokenValidator.validateToken(authToken, userId);
+
+//        Boolean flag = false;
+//        for(String role : jwtData.getRoles()){
+//            if(role.equals("Admin")){
+//                flag = true;
+//            }
+//        }
+//
+//        if(flag.equals(false)){
+//            throw new NotFoundException("Role permission not found");
+//        }
+
         return productService.getProductById(id);
     }
 
