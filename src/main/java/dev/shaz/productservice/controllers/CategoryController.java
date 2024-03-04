@@ -23,12 +23,12 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("{uuid}")
+    @GetMapping("/singleCategory/{uuid}")
     public ResponseEntity<List<String>> getProductsFromCategoryId(@PathVariable("uuid") String uuid) throws NotFoundException {
         return new ResponseEntity<>(categoryService.getProductsFromCategoryId(uuid), HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/allCategories")
     public ResponseEntity<List<List<String>>> getProductsFromCategoryIds(@RequestBody ProductListRequestDto request){
        return new ResponseEntity<>(categoryService.getProductsFromCategoryIds(request.getUuids()), HttpStatus.OK);
     }

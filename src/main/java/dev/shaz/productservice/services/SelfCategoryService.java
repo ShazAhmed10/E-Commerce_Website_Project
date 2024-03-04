@@ -44,6 +44,7 @@ public class SelfCategoryService implements CategoryService{
     }
 
     @Override
+    @Transactional
     public List<List<String>> getProductsFromCategoryIds(List<String> uuids){
         List<UUID> uuidList = new ArrayList<>();
         for(String id : uuids){

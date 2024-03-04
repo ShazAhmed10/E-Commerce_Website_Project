@@ -22,39 +22,39 @@ public class ProductController {
     private ProductService productService;
     private TokenValidator tokenValidator;
 
-    public ProductController(@Qualifier("selfProductService") ProductService productService,
+    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService,
                              TokenValidator tokenValidator){
         this.productService = productService;
         this.tokenValidator = tokenValidator;
     }
 
-    @GetMapping("{id}")
-    public GenericProductDto getProductById(
+    @GetMapping("/singleProduct/{id}")
+    public ResponseEntity<GenericProductDto> getProductById(
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authToken,
             @RequestParam Long userId,
             @PathVariable("id") String id) throws NotFoundException {
 
         JwtData jwtData = tokenValidator.validateToken(authToken, userId);
 
-        return productService.getProductById(id);
+        return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }
 
-    @GetMapping()
-    public List<GenericProductDto> getAllProducts(){
-        return productService.getAllProducts();
+    @GetMapping("/allProducts")
+    public ResponseEntity<List<GenericProductDto>> getAllProducts(){
+        return new ResponseEntity<>(productService.getAllProducts(), HttpStatus.OK);
     }
 
-    @PostMapping()
-    public GenericProductDto createProduct(@RequestBody GenericProductDto genericProductDto){
-        return productService.createProduct(genericProductDto);
+    @PostMapping("/addProduct")
+    public ResponseEntity<GenericProductDto> createProduct(@RequestBody GenericProductDto genericProductDto){
+        return new ResponseEntity<>(productService.createProduct(genericProductDto), HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/removeProduct/{id}")
     public ResponseEntity<GenericProductDto> deleteProduct(@PathVariable("id") String id) throws NotFoundException{
         return new ResponseEntity<>(productService.deleteProduct(id), HttpStatus.OK);
     }
 
-    @PutMapping("updateProduct/{id}")
+    @PutMapping("/updateProduct/{id}")
     public ResponseEntity<GenericProductDto> updateProductById(@PathVariable("id") String id, @RequestBody GenericProductDto genericProductDto) throws NotFoundException{
         return new ResponseEntity<>(productService.updateProductById(id, genericProductDto), HttpStatus.OK);
     }

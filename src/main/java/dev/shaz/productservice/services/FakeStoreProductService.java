@@ -29,7 +29,7 @@ public class FakeStoreProductService implements ProductService{
     public GenericProductDto convertFakeStoreProductDtoToGenericProductDto(FakeStoreProductDto fakeStoreProductDto){
         GenericProductDto genericProductDto = new GenericProductDto();
 
-        genericProductDto.setId(fakeStoreProductDto.getId());
+        genericProductDto.setId(fakeStoreProductDto.getId().toString());
         genericProductDto.setTitle(fakeStoreProductDto.getTitle());
         genericProductDto.setDescription(fakeStoreProductDto.getDescription());
         genericProductDto.setCategory(fakeStoreProductDto.getCategory());
@@ -45,11 +45,6 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public GenericProductDto createProduct(GenericProductDto product) {
-        return convertFakeStoreProductDtoToGenericProductDto(fakeStoreProductClient.createProduct(product));
-    }
-
-    @Override
     public List<GenericProductDto> getAllProducts() {
         List<FakeStoreProductDto> fakeStoreProductDtos = fakeStoreProductClient.getAllProducts();
 
@@ -61,6 +56,11 @@ public class FakeStoreProductService implements ProductService{
         }
 
         return genericProductDtos;
+    }
+
+    @Override
+    public GenericProductDto createProduct(GenericProductDto product) {
+        return convertFakeStoreProductDtoToGenericProductDto(fakeStoreProductClient.createProduct(product));
     }
 
     @Override
