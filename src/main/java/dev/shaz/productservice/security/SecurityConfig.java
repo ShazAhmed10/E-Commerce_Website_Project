@@ -12,9 +12,12 @@ public class SecurityConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/products").hasAuthority("Admin")
-                        .anyRequest().permitAll())
-                .formLogin(Customizer.withDefaults());
+                                .requestMatchers("/actuator/health").permitAll()
+                                .anyRequest().authenticated()
+                )
+                .formLogin(Customizer.withDefaults())
+                .oauth2ResourceServer((oauth2) -> oauth2
+                        .jwt(Customizer.withDefaults()));
 
         return http.build();
     }

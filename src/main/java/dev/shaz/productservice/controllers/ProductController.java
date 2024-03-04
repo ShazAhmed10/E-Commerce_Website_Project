@@ -36,17 +36,6 @@ public class ProductController {
 
         JwtData jwtData = tokenValidator.validateToken(authToken, userId);
 
-//        Boolean flag = false;
-//        for(String role : jwtData.getRoles()){
-//            if(role.equals("Admin")){
-//                flag = true;
-//            }
-//        }
-//
-//        if(flag.equals(false)){
-//            throw new NotFoundException("Role permission not found");
-//        }
-
         return productService.getProductById(id);
     }
 

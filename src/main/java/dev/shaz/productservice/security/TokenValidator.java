@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Optional;
-
 @Component
 public class TokenValidator {
     @Value("${authService.api.validateurl}")
@@ -35,6 +33,17 @@ public class TokenValidator {
         if(jwtData == null){
             throw new NotFoundException("Token cannot be Authenticated");
         }
+
+//        Boolean flag = false;
+//        for(String role : jwtData.getRoles()){
+//            if(role.equals("Admin")){
+//                flag = true;
+//            }
+//        }
+//
+//        if(flag.equals(false)){
+//            throw new NotFoundException("Role permission not found");
+//        }
 
         return jwtData;
     }
