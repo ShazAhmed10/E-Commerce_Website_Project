@@ -3,6 +3,8 @@ package dev.shaz.productservice.repositories;
 import dev.shaz.productservice.dtos.GenericProductDto;
 import dev.shaz.productservice.models.Price;
 import dev.shaz.productservice.models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -28,4 +30,6 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
 
     @Query(value = "SELECT * FROM product as p WHERE p.title = :title", nativeQuery = true)
     public Optional<Product> findByTitle(String title);
+
+    public Page<Product> findAllByTitleContaining(String query, Pageable pageable);
 }

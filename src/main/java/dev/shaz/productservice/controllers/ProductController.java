@@ -22,7 +22,7 @@ public class ProductController {
     private ProductService productService;
     private TokenValidator tokenValidator;
 
-    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService,
+    public ProductController(@Qualifier("selfProductService") ProductService productService,
                              TokenValidator tokenValidator){
         this.productService = productService;
         this.tokenValidator = tokenValidator;
