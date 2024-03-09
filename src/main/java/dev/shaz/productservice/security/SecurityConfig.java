@@ -13,7 +13,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                                 .requestMatchers("/actuator/health").permitAll()
-                                .anyRequest().authenticated()
+                                //.anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
                 .formLogin(Customizer.withDefaults())
                 .oauth2ResourceServer((oauth2) -> oauth2

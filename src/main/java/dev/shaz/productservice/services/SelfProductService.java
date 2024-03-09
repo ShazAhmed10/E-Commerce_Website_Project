@@ -1,6 +1,9 @@
 package dev.shaz.productservice.services;
 
+import dev.shaz.productservice.configurations.RestTemplateConfig;
 import dev.shaz.productservice.dtos.GenericProductDto;
+import dev.shaz.productservice.dtos.UserServiceRole;
+import dev.shaz.productservice.dtos.UserServiceUserDto;
 import dev.shaz.productservice.exceptions.NotFoundException;
 import dev.shaz.productservice.models.Category;
 import dev.shaz.productservice.models.Price;
@@ -8,7 +11,11 @@ import dev.shaz.productservice.models.Product;
 import dev.shaz.productservice.repositories.CategoryRepository;
 import dev.shaz.productservice.repositories.PriceRepository;
 import dev.shaz.productservice.repositories.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +27,20 @@ public class SelfProductService implements ProductService{
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
     private PriceRepository priceRepository;
+    private RedisTemplate redisTemplate;
+    private RestTemplate restTemplate;
 
+    @Autowired
     public SelfProductService(ProductRepository productRepository,
                               CategoryRepository categoryRepository,
-                              PriceRepository priceRepository){
+                              PriceRepository priceRepository,
+                              RedisTemplate redisTemplate,
+                              RestTemplate restTemplate){
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.priceRepository = priceRepository;
+        this.redisTemplate = redisTemplate;
+        this.restTemplate = restTemplate;
     }
 
     public GenericProductDto convertProductToGenericProductDto(Product product){
@@ -45,13 +59,28 @@ public class SelfProductService implements ProductService{
 
     @Override
     public GenericProductDto getProductById(String id) throws NotFoundException {
+        //Dummy call to UserService to establish Service Discovery
+        ResponseEntity<UserServiceUserDto> userDto = restTemplate
+                .getForEntity("http://userservice/users/1",UserServiceUserDto.class);
+        System.out.println(userDto.getBody().getEmail());
+
+        //Required logic for the method getProductById
+        GenericProductDto cacheGenericProductDto
+                = (GenericProductDto) redisTemplate.opsForValue().get(String.valueOf(id));
+        if(cacheGenericProductDto != null){
+            return cacheGenericProductDto;
+        }
+
         Optional<Product> optionalProduct = productRepository.findById(UUID.fromString(id));
         if(optionalProduct.isEmpty()){
             throw new NotFoundException("The product required is not present");
         }
         Product product = optionalProduct.get();
+        GenericProductDto genericProductDto = convertProductToGenericProductDto(product);
 
-        return convertProductToGenericProductDto(product);
+        redisTemplate.opsForValue().set(String.valueOf(id), genericProductDto);
+        
+        return genericProductDto;
     }
 
     @Override

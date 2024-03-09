@@ -6,6 +6,8 @@ import dev.shaz.productservice.exceptions.NotFoundException;
 import dev.shaz.productservice.security.JwtData;
 import dev.shaz.productservice.security.TokenValidator;
 import dev.shaz.productservice.services.ProductService;
+import jakarta.annotation.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ public class ProductController {
     private ProductService productService;
     private TokenValidator tokenValidator;
 
+    @Autowired
     public ProductController(@Qualifier("selfProductService") ProductService productService,
                              TokenValidator tokenValidator){
         this.productService = productService;
@@ -30,11 +33,11 @@ public class ProductController {
 
     @GetMapping("/singleProduct/{id}")
     public ResponseEntity<GenericProductDto> getProductById(
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authToken,
-            @RequestParam Long userId,
+            @Nullable @RequestHeader(HttpHeaders.AUTHORIZATION) String authToken,
+            @Nullable @RequestParam Long userId,
             @PathVariable("id") String id) throws NotFoundException {
 
-        JwtData jwtData = tokenValidator.validateToken(authToken, userId);
+        //JwtData jwtData = tokenValidator.validateToken(authToken, userId);
 
         return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }
