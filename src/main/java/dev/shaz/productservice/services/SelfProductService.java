@@ -1,8 +1,6 @@
 package dev.shaz.productservice.services;
 
-import dev.shaz.productservice.configurations.RestTemplateConfig;
 import dev.shaz.productservice.dtos.GenericProductDto;
-import dev.shaz.productservice.dtos.UserServiceRole;
 import dev.shaz.productservice.dtos.UserServiceUserDto;
 import dev.shaz.productservice.exceptions.NotFoundException;
 import dev.shaz.productservice.models.Category;

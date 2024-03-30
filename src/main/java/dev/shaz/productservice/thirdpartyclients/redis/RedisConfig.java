@@ -1,4 +1,4 @@
-package dev.shaz.productservice.configurations;
+package dev.shaz.productservice.thirdpartyclients.redis;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

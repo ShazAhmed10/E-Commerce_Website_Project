@@ -1,4 +1,4 @@
-package dev.shaz.productservice.configurations;
+package dev.shaz.productservice.thirdpartyclients.redis;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
